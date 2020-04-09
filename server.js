@@ -49,3 +49,13 @@ app.post('/',(req, res) => {
       res.redirect('/');
     });
   });
+  //route for delete data
+app.delete('/delete',(req, res) => {
+    let data = req.body;
+    console.log(req.body);
+    let sql = "DELETE FROM greencard WHERE ?";
+    let query = connection.query(sql, data,(err, results) => {
+      if(err) throw err;
+      res.redirect('/');
+    });
+  });

@@ -19,6 +19,8 @@ class App extends React.Component {
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleSourceNameChange = this.handleSourceNameChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleDeleteIdChange = this.handleDeleteIdChange.bind(this);
+        this.onDelete = this.onDelete.bind(this);
       }
 
       handleIdChange(e) {
@@ -51,6 +53,9 @@ class App extends React.Component {
       handleSourceNameChange(e) {
         this.setState({sourcename: e.target.value})
       }
+      handleDeleteIdChange(e) {
+        this.setState({deleteid: e.target.value})
+      }
   componentDidMount() {
     let currentcomponent = this;
     axios.get('http://localhost:3000')
@@ -78,8 +83,24 @@ class App extends React.Component {
     .then(res => {
         // const persons = res.data;
         // this.setState({ persons });
+        this.setState({
+          allentries: this.state.allentries.concat(res.data)
+        })
       })         
-  
+} 
+onDelete(e) {
+  e.preventDefault();
+  const entry = {
+    id: this.state.deleteid
+  }
+  console.log(entry)
+  axios.delete('http://localhost:3000/delete', {
+    data: {
+      id: this.state.deleteid
+    }
+  })
+  .then(res => {
+    })         
 } 
   render() {
     return (
@@ -124,6 +145,13 @@ class App extends React.Component {
         <input type="text" name="source name" onChange={this.handleSourceNameChange} />
         </label>
         <input type="submit" value="insert" />
+      </form>
+
+      <form onSubmit={this.onDelete} method="user" className="right">
+        <span>id to delete:</span>
+        <input type="text" name="id" id="id" onChange={this.handleDeleteIdChange}/>
+        
+        <input type="submit" value="delete" />
       </form>
     {/* ===================== */}
     {/* HOW TO USE IT         */}
