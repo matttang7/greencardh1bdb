@@ -7,7 +7,7 @@ class App extends React.Component {
          this.state = {
           allentries: []
         }
-
+        //Insert methods
         this.handleIdChange = this.handleIdChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleFullDescriptionChange = this.handleFullDescriptionChange.bind(this);
@@ -19,10 +19,23 @@ class App extends React.Component {
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
         this.handleSourceNameChange = this.handleSourceNameChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        //Delete methods
         this.handleDeleteIdChange = this.handleDeleteIdChange.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        //Update methods
+        this.handleIdUpdateChange = this.handleIdUpdateChange.bind(this);
+        this.handleTitleUpdateChange = this.handleTitleUpdateChange.bind(this);
+        this.handleFullDescriptionUpdateChange = this.handleFullDescriptionUpdateChange.bind(this);
+        this.handleLocationRawUpdateChange = this.handleLocationRawUpdateChange.bind(this);
+        this.handleLocationNormalizedUpdateChange = this.handleLocationNormalizedUpdateChange.bind(this);
+        this.handleContractTypeUpdateChange = this.handleContractTypeUpdateChange.bind(this);
+        this.handleContractTimeUpdateChange = this.handleContractTimeUpdateChange.bind(this);
+        this.handleCompanyUpdateChange = this.handleCompanyUpdateChange.bind(this);
+        this.handleCategoryUpdateChange = this.handleCategoryUpdateChange.bind(this);
+        this.handleSourceNameUpdateChange = this.handleSourceNameUpdateChange.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
       }
-
+      //Insert methods
       handleIdChange(e) {
         this.setState({id: e.target.value})
       }
@@ -53,8 +66,40 @@ class App extends React.Component {
       handleSourceNameChange(e) {
         this.setState({sourcename: e.target.value})
       }
+      //Delete methods
       handleDeleteIdChange(e) {
         this.setState({deleteid: e.target.value})
+      }
+      //Update methods
+      handleIdUpdateChange(e) {
+        this.setState({updateid: e.target.value})
+      }
+      handleTitleUpdateChange(e) {
+        this.setState({updatetitle: e.target.value})
+      }
+      handleFullDescriptionUpdateChange(e) {
+        this.setState({updatefulldescription: e.target.value})
+      }
+      handleLocationRawUpdateChange(e) {
+        this.setState({updatelocationraw: e.target.value})
+      }
+      handleLocationNormalizedUpdateChange(e) {
+        this.setState({updatelocationnormalized: e.target.value})
+      }
+      handleContractTypeUpdateChange(e) {
+        this.setState({updatecontracttype: e.target.value})
+      }
+      handleContractTimeUpdateChange(e) {
+        this.setState({updatecontracttime: e.target.value})
+      }
+      handleCompanyUpdateChange(e) {
+        this.setState({updatecompany: e.target.value})
+      }
+      handleCategoryUpdateChange(e) {
+        this.setState({updatecategory: e.target.value})
+      }
+      handleSourceNameUpdateChange(e) {
+        this.setState({updatesourcename: e.target.value})
       }
   componentDidMount() {
     let currentcomponent = this;
@@ -102,6 +147,31 @@ onDelete(e) {
   .then(res => {
     })         
 } 
+
+onUpdate(e) {
+  e.preventDefault();
+  const entry = {
+    id: this.state.updateid,
+    title: this.state.updatetitle,
+    fulldescription: this.state.updatefulldescription,
+    locationraw: this.state.updatelocationraw,
+    locationnormalized: this.state.updatelocationnormalized,
+    contracttype: this.state.updatecontracttype,
+    contracttime: this.state.updatecontracttime,
+    company: this.state.updatecompany,
+    category: this.state.updatecategory,
+    sourcename: this.state.updatesourcename
+  }
+  
+  axios.put('http://localhost:3000', entry)
+  .then(res => {
+      // const persons = res.data;
+      // this.setState({ persons });
+      // this.setState({
+      //   //allentries: this.state.allentries.concat(res.data)
+      // })
+    })         
+} 
   render() {
     return (
     <div className="App">
@@ -126,7 +196,7 @@ onDelete(e) {
         </label>
         <label>
         <span>contract type:</span>
-        <input type="text" name="contract type" onChange={this.handleLocationNormalizedChange} />
+        <input type="text" name="contract type" onChange={this.handleContractTypeChange} />
         </label>
         <label>
         <span>contract time:</span>
@@ -152,6 +222,48 @@ onDelete(e) {
         <input type="text" name="id" id="id" onChange={this.handleDeleteIdChange}/>
         
         <input type="submit" value="delete" />
+      </form>
+
+      <form onSubmit={this.onUpdate} method="user" className="right">
+        <span>id:</span>
+        <input type="text" name="id" id="id" onChange={this.handleIdUpdateChange}/>
+        <label>
+        <span>title:</span>
+        <input type="text" name="title" onChange={this.handleTitleUpdateChange}/>
+        </label>
+        <label>
+        <span>full description:</span>
+        <input type="text" name="full description" onChange={this.handleFullDescriptionUpdateChange}/>
+        </label>
+        <label>
+        <span>location raw:</span>
+        <input type="text" name="location raw" onChange={this.handleLocationRawUpdateChange}/>
+        </label>
+        <label>
+        <span>location normalized:</span>
+        <input type="text" name="location normalized"onChange={this.handleLocationNormalizedUpdateChange} />
+        </label>
+        <label>
+        <span>contract type:</span>
+        <input type="text" name="contract type" onChange={this.handleContractTypeUpdateChange} />
+        </label>
+        <label>
+        <span>contract time:</span>
+        <input type="text" name="contract time" onChange={this.handleContractTimeUpdateChange} />
+        </label>
+        <label>
+        <span>company:</span>
+        <input type="text" name="company" onChange={this.handleCompanyUpdateChange} />
+        </label>
+        <label>
+        <span>category:</span>
+        <input type="text" name="category" onChange={this.handleCategoryUpdateChange} />
+        </label>
+        <label>
+        <span>source name:</span>
+        <input type="text" name="source name" onChange={this.handleSourceNameUpdateChange} />
+        </label>
+        <input type="submit" value="update" />
       </form>
     {/* ===================== */}
     {/* HOW TO USE IT         */}

@@ -27,10 +27,10 @@ var connection = mysql.createConnection({
     console.log("Example app listening at http://%s:%s", host, port)
   });
 app.get('/', (req, res) => {
-    console.log("reached");
+    //console.log("reached");
     connection.query('SELECT* FROM greencard WHERE Category="IT Jobs"', function(err, rows, fields) { 
         if (!err) {
-            console.log("SENT")
+            //console.log("SENT")
             res.send(rows);
         } else {
             console.log(err);
@@ -43,7 +43,7 @@ app.post('/',(req, res) => {
     let data = {Id: req.body.id, Title: req.body.title, FullDescription: req.body.fulldescription, LocationRaw: req.body.locationraw, LocationNormalized: req.body.locationnormalized, 
       ContractType: req.body.contracttype, ContractTime: req.body.contracttime, Company: req.body.company, Category: req.body.category, SourceName: req.body.sourcename};
     let sql = "INSERT INTO greencard SET ?";
-    console.log("reached");
+    //console.log("reached");
     let query = connection.query(sql, data,(err, results) => {
       if(err) throw err;
       res.redirect('/');
@@ -55,6 +55,20 @@ app.delete('/delete',(req, res) => {
     console.log(req.body);
     let sql = "DELETE FROM greencard WHERE ?";
     let query = connection.query(sql, data,(err, results) => {
+      if(err) throw err;
+      res.redirect('/');
+    });
+  });
+
+  //route for insert data
+  app.put('/',(req, res) => {
+    let data = {Id: req.body.id, Title: req.body.title, FullDescription: req.body.fulldescription, LocationRaw: req.body.locationraw, LocationNormalized: req.body.locationnormalized, 
+      ContractType: req.body.contracttype, ContractTime: req.body.contracttime, Company: req.body.company, Category: req.body.category, SourceName: req.body.sourcename};
+    let sql = "UPDATE greencard SET Title = \"" + req.body.title + "\",FullDescription = \"" + req.body.fulldescription + "\",LocationRaw = \"" + req.body.locationraw +
+    ",LocationNormalized = " + req.body.locationraw + ",ContractType = " + req.body.contracttype + ",ContractTime = " + req.body.contracttime + 
+    "\",Company = \"" + req.body.company + "\",Category = \"" + req.body.category + "\",SourceName =  \"" + req.body.sourcename + "\"WHERE Id = \"" + req.body.id + "\";";
+    console.log("reached");
+    let query = connection.query(sql, (err, results) => {
       if(err) throw err;
       res.redirect('/');
     });
