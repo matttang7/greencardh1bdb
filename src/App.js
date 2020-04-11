@@ -34,6 +34,9 @@ class App extends React.Component {
         this.handleCategoryUpdateChange = this.handleCategoryUpdateChange.bind(this);
         this.handleSourceNameUpdateChange = this.handleSourceNameUpdateChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+
+        this.handleSearchIdChange = this.handleSearchIdChange.bind(this);
+        this.onSearch = this.onSearch.bind(this);
       }
       //Insert methods
       handleIdChange(e) {
@@ -101,14 +104,18 @@ class App extends React.Component {
       handleSourceNameUpdateChange(e) {
         this.setState({updatesourcename: e.target.value})
       }
-  componentDidMount() {
-    let currentcomponent = this;
-    axios.get('http://localhost:3000')
-    .then(function(res){
-      currentcomponent.setState({allentries: res.data}, function() {
-      });
-    })
-  }
+
+      handleSearchIdChange(e) {
+        this.setState({searchid: e.target.value})
+      }
+  // componentDidMount() {
+  //   let currentcomponent = this;
+  //   axios.get('http://localhost:3000')
+  //   .then(function(res){
+  //     currentcomponent.setState({allentries: res.data}, function() {
+  //     });
+  //   })
+  // }
   onSubmit(e) {
     e.preventDefault();
     const entry = {
@@ -132,20 +139,6 @@ class App extends React.Component {
           allentries: this.state.allentries.concat(res.data)
         })
       })         
-} 
-onDelete(e) {
-  e.preventDefault();
-  const entry = {
-    id: this.state.deleteid
-  }
-  console.log(entry)
-  axios.delete('http://localhost:3000/delete', {
-    data: {
-      id: this.state.deleteid
-    }
-  })
-  .then(res => {
-    })         
 } 
 
 onUpdate(e) {
@@ -171,6 +164,35 @@ onUpdate(e) {
       //   //allentries: this.state.allentries.concat(res.data)
       // })
     })         
+} 
+
+onDelete(e) {
+  e.preventDefault();
+  const entry = {
+    id: this.state.deleteid
+  }
+  console.log(entry)
+  axios.delete('http://localhost:3000/delete', {
+    data: {
+      id: this.state.deleteid
+    }
+  })
+  .then(res => {
+    })         
+} 
+
+onSearch(e) {
+  e.preventDefault();
+  let currentcomponent = this;
+  axios.get('http://localhost:3000', {
+    params: {
+      id: this.state.searchid
+    }
+  })
+  .then(function(res){
+      currentcomponent.setState({allentries: res.data}, function() {
+      });
+    })       
 } 
   render() {
     return (
@@ -264,6 +286,13 @@ onUpdate(e) {
         <input type="text" name="source name" onChange={this.handleSourceNameUpdateChange} />
         </label>
         <input type="submit" value="update" />
+      </form>
+
+      <form onSubmit={this.onSearch} method="user" className="right">
+        <span>category to search:</span>
+        <input type="text" name="id" id="id" onChange={this.handleSearchIdChange}/>
+        
+        <input type="submit" value="search" />
       </form>
     {/* ===================== */}
     {/* HOW TO USE IT         */}

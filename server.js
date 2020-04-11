@@ -28,7 +28,10 @@ var connection = mysql.createConnection({
   });
 app.get('/', (req, res) => {
     //console.log("reached");
-    connection.query('SELECT* FROM greencard WHERE Category="IT Jobs"', function(err, rows, fields) { 
+    let data = req.query.id;
+    console.log(req.query.id);
+    console.log("reached");
+    connection.query('SELECT * FROM greencard WHERE Category=\"' + data + '\"', function(err, rows, fields) { 
         if (!err) {
             //console.log("SENT")
             res.send(rows);
