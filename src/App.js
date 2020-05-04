@@ -249,6 +249,7 @@ onSearch(e) {
 
 onRecommend(e) {
   e.preventDefault();
+  let currentcomponent = this;
   const entry = {
     id: this.state.recommendkeyword
   }
@@ -271,6 +272,15 @@ onRecommend(e) {
       console.log(response)
       response.json().then(function (data) {
         console.log(data);
+        axios.get('http://localhost:3000/multiple', {
+          params: {
+            ids: data
+          }
+        })
+        .then(function(res){
+            currentcomponent.setState({allentries: res.data}, function() {
+            });
+        })   
       });
     })
     .catch(function (error) {

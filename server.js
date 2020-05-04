@@ -123,3 +123,24 @@ app.delete('/delete',(req, res) => {
       res.redirect('/');
     });
   });
+
+  app.get('/multiple', (req, res) => {
+    //console.log("reached");
+    let ids = req.query.ids;
+    console.log(req.query.ids);
+    console.log("reached");
+    let sql  = 'SELECT * FROM greencard WHERE ID in (';
+    sql = sql + ids + ')';
+    console.log(sql)
+    connection.query(sql, function(err, rows, fields) {
+        if (!err) {
+            //console.log("SENT")
+            console.log(this.sql);
+            console.log(rows);
+            res.send(rows);
+        } else {
+            console.log(err);
+            console.log('Error while performing Query.');
+        }
+    });
+});
