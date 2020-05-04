@@ -28,12 +28,59 @@ var connection = mysql.createConnection({
   });
 app.get('/', (req, res) => {
     //console.log("reached");
-    let data = req.query.id;
+    let id = 'Id="'  + req.query.id + '" AND ';
+    let title = 'Title="'  + req.query.title + '" AND ';
+    let fulldescription = 'FullDescription="'  + req.query.fulldescription + '" AND ';
+    let locationraw = 'LocationRaw="'  + req.query.locationraw + '" AND ';
+    let locationnormalized = 'LocationNormalized="'  + req.query.locationnormalized + '" AND ';
+    let contracttype = 'ContractType="'  + req.query.contracttype + '" AND ';
+    let contracttime = 'ContractTime="'  + req.query.contracttime + '" AND ';
+    let company = 'Company="'  + req.query.company + '" AND ';
+    let category = 'Category="'  + req.query.category + '" AND ';
+    let sourcename = 'SourceName="'  + req.query.sourcename + '"';
     console.log(req.query.id);
     console.log("reached");
-    connection.query('SELECT * FROM greencard WHERE Category=\"' + data + '\"', function(err, rows, fields) { 
+    if(req.query.id === ""){
+      id = "";
+    }
+    if(req.query.title === ""){
+      title = "";
+    }
+    if(req.query.fulldescription === ""){
+      fulldescription = "";
+    }
+    if(req.query.locationraw === ""){
+      locationraw = "";
+    }
+    if(req.query.locationnormalized === ""){
+      locationnormalized = "";
+    }
+    if(req.query.contracttype === ""){
+      contracttype = "";
+    }
+    if(req.query.contracttime === ""){
+      contracttime = "";
+    }
+    if(req.query.company === ""){
+      company = "";
+    }
+    if(req.query.category === ""){
+      category = "";
+    }
+    if(req.query.sourcename === ""){
+      sourcename = "";
+    }
+    let sql  = 'SELECT * FROM greencard WHERE ' + id + title + fulldescription + locationraw + locationnormalized + contracttype + contracttime + company + category + sourcename;
+    if(sql.substr(sql.length - 4) === "AND "){
+      sql = sql.slice(0, -4);
+    }
+    sql = sql + ';';
+    console.log(sql)
+    connection.query(sql, function(err, rows, fields) {
         if (!err) {
             //console.log("SENT")
+            console.log(this.sql);
+            console.log(rows);
             res.send(rows);
         } else {
             console.log(err);
@@ -63,7 +110,7 @@ app.delete('/delete',(req, res) => {
     });
   });
 
-  //route for insert data
+  //route for update data
   app.put('/',(req, res) => {
     let data = {Id: req.body.id, Title: req.body.title, FullDescription: req.body.fulldescription, LocationRaw: req.body.locationraw, LocationNormalized: req.body.locationnormalized, 
       ContractType: req.body.contracttype, ContractTime: req.body.contracttime, Company: req.body.company, Category: req.body.category, SourceName: req.body.sourcename};

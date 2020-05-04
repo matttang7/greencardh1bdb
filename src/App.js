@@ -34,8 +34,17 @@ class App extends React.Component {
         this.handleCategoryUpdateChange = this.handleCategoryUpdateChange.bind(this);
         this.handleSourceNameUpdateChange = this.handleSourceNameUpdateChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
-
+        //Search methods
         this.handleSearchIdChange = this.handleSearchIdChange.bind(this);
+        this.handleTitleSearchChange = this.handleTitleSearchChange.bind(this);
+        this.handleFullDescriptionSearchChange = this.handleFullDescriptionSearchChange.bind(this);
+        this.handleLocationRawSearchChange = this.handleLocationRawSearchChange.bind(this);
+        this.handleLocationNormalizedSearchChange = this.handleLocationNormalizedSearchChange.bind(this);
+        this.handleContractTypeSearchChange = this.handleContractTypeSearchChange.bind(this);
+        this.handleContractTimeSearchChange = this.handleContractTimeSearchChange.bind(this);
+        this.handleCompanySearchChange = this.handleCompanySearchChange.bind(this);
+        this.handleCategorySearchChange = this.handleCategorySearchChange.bind(this);
+        this.handleSourceNameSearchChange = this.handleSourceNameSearchChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
       }
       //Insert methods
@@ -104,9 +113,36 @@ class App extends React.Component {
       handleSourceNameUpdateChange(e) {
         this.setState({updatesourcename: e.target.value})
       }
-
+      //Search methods
       handleSearchIdChange(e) {
         this.setState({searchid: e.target.value})
+      }
+      handleTitleSearchChange(e) {
+        this.setState({searchtitle: e.target.value})
+      }
+      handleFullDescriptionSearchChange(e) {
+        this.setState({searchfulldescription: e.target.value})
+      }
+      handleLocationRawSearchChange(e) {
+        this.setState({searchlocationraw: e.target.value})
+      }
+      handleLocationNormalizedSearchChange(e) {
+        this.setState({searchlocationnormalized: e.target.value})
+      }
+      handleContractTypeSearchChange(e) {
+        this.setState({searchcontracttype: e.target.value})
+      }
+      handleContractTimeSearchChange(e) {
+        this.setState({searchcontracttime: e.target.value})
+      }
+      handleCompanySearchChange(e) {
+        this.setState({searchcompany: e.target.value})
+      }
+      handleCategorySearchChange(e) {
+        this.setState({searchcategory: e.target.value})
+      }
+      handleSourceNameSearchChange(e) {
+        this.setState({searchsourcename: e.target.value})
       }
   // componentDidMount() {
   //   let currentcomponent = this;
@@ -186,7 +222,16 @@ onSearch(e) {
   let currentcomponent = this;
   axios.get('http://localhost:3000', {
     params: {
-      id: this.state.searchid
+      id: this.state.searchid,
+      title: this.state.searchtitle,
+      fulldescription: this.state.searchfulldescription,
+      locationraw: this.state.searchlocationraw,
+      locationnormalized: this.state.searchlocationnormalized,
+      contracttype: this.state.searchcontracttype,
+      contracttime: this.state.searchcontracttime,
+      company: this.state.searchcompany,
+      category: this.state.searchcategory,
+      sourcename: this.state.searchsourcename
     }
   })
   .then(function(res){
@@ -289,9 +334,44 @@ onSearch(e) {
       </form>
 
       <form onSubmit={this.onSearch} method="user" className="right">
-        <span>category to search:</span>
+      <span>id:</span>
         <input type="text" name="id" id="id" onChange={this.handleSearchIdChange}/>
-        
+        <label>
+        <span>title:</span>
+        <input type="text" name="title" onChange={this.handleTitleSearchChange}/>
+        </label>
+        <label>
+        <span>full description:</span>
+        <input type="text" name="full description" onChange={this.handleFullDescriptionSearchChange}/>
+        </label>
+        <label>
+        <span>location raw:</span>
+        <input type="text" name="location raw" onChange={this.handleLocationRawSearchChange}/>
+        </label>
+        <label>
+        <span>location normalized:</span>
+        <input type="text" name="location normalized"onChange={this.handleLocationNormalizedSearchChange} />
+        </label>
+        <label>
+        <span>contract type:</span>
+        <input type="text" name="contract type" onChange={this.handleContractTypeSearchChange} />
+        </label>
+        <label>
+        <span>contract time:</span>
+        <input type="text" name="contract time" onChange={this.handleContractTimeSearchChange} />
+        </label>
+        <label>
+        <span>company:</span>
+        <input type="text" name="company" onChange={this.handleCompanySearchChange} />
+        </label>
+        <label>
+        <span>category:</span>
+        <input type="text" name="category" onChange={this.handleCategorySearchChange} />
+        </label>
+        <label>
+        <span>source name:</span>
+        <input type="text" name="source name" onChange={this.handleSourceNameSearchChange} />
+        </label>
         <input type="submit" value="search" />
       </form>
     {/* ===================== */}
