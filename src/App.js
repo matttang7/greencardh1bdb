@@ -46,6 +46,9 @@ class App extends React.Component {
         this.handleCategorySearchChange = this.handleCategorySearchChange.bind(this);
         this.handleSourceNameSearchChange = this.handleSourceNameSearchChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
+        //Recommend methods
+        this.handleRecommendKeywordChange = this.handleRecommendKeywordChange.bind(this);
+        this.onRecommend = this.onRecommend.bind(this);
       }
       //Insert methods
       handleIdChange(e) {
@@ -144,6 +147,10 @@ class App extends React.Component {
       handleSourceNameSearchChange(e) {
         this.setState({searchsourcename: e.target.value})
       }
+      
+      handleRecommendKeywordChange(e){
+        this.setState({recommendkeyword: e.target.value})
+      }
   // componentDidMount() {
   //   let currentcomponent = this;
   //   axios.get('http://localhost:3000')
@@ -239,6 +246,38 @@ onSearch(e) {
       });
     })       
 } 
+
+onRecommend(e) {
+  e.preventDefault();
+  const entry = {
+    id: this.state.recommendkeyword
+  }
+  console.log(entry)
+  fetch(`/query-example`, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(entry),
+    cache: "no-cache",
+    headers: new Headers({
+      "content-type": "application/json"
+    })
+  })
+    .then(function (response) {
+      if (response.status !== 200) {
+        console.log(`Looks like there was a problem. Status code: ${response.status}`);
+        return;
+      }
+      console.log("reached")
+      console.log(response)
+      response.json().then(function (data) {
+        console.log(data);
+      });
+    })
+    .catch(function (error) {
+      console.log("Fetch error: " + error);
+    });       
+} 
+
   render() {
     return (
     <div className="App">
@@ -373,6 +412,13 @@ onSearch(e) {
         <input type="text" name="source name" onChange={this.handleSourceNameSearchChange} />
         </label>
         <input type="submit" value="search" />
+      </form>
+      
+      <form onSubmit={this.onRecommend} method="user" className="right">
+        <span>keywords for recommendation:</span>
+        <input type="text" name="keywords" id="keywords" onChange={this.handleRecommendKeywordChange}/>
+        
+        <input type="submit" value="recommend" />
       </form>
     {/* ===================== */}
     {/* HOW TO USE IT         */}
