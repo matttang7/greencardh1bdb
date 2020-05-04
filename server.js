@@ -40,34 +40,34 @@ app.get('/', (req, res) => {
     let sourcename = 'SourceName="'  + req.query.sourcename + '"';
     console.log(req.query.id);
     console.log("reached");
-    if(req.query.id === ""){
+    if(req.query.id === "" || typeof req.query.id === 'undefined'){
       id = "";
     }
-    if(req.query.title === ""){
+    if(req.query.title === "" || typeof req.query.title === 'undefined'){
       title = "";
     }
-    if(req.query.fulldescription === ""){
+    if(req.query.fulldescription === "" || typeof req.query.fulldescription === 'undefined'){
       fulldescription = "";
     }
-    if(req.query.locationraw === ""){
+    if(req.query.locationraw === "" || typeof req.query.locationraw === 'undefined'){
       locationraw = "";
     }
-    if(req.query.locationnormalized === ""){
+    if(req.query.locationnormalized === "" || typeof req.query.locationraw === 'undefined'){
       locationnormalized = "";
     }
-    if(req.query.contracttype === ""){
+    if(req.query.contracttype === "" || typeof req.query.contracttype === 'undefined'){
       contracttype = "";
     }
-    if(req.query.contracttime === ""){
+    if(req.query.contracttime === "" || typeof req.query.contracttime === 'undefined'){
       contracttime = "";
     }
-    if(req.query.company === ""){
+    if(req.query.company === "" || typeof req.query.company === 'undefined'){
       company = "";
     }
-    if(req.query.category === ""){
+    if(req.query.category === "" || typeof req.query.category === 'undefined'){
       category = "";
     }
-    if(req.query.sourcename === ""){
+    if(req.query.sourcename === "" || typeof req.query.sourcename === 'undefined'){
       sourcename = "";
     }
     let sql  = 'SELECT * FROM greencard WHERE ' + id + title + fulldescription + locationraw + locationnormalized + contracttype + contracttime + company + category + sourcename;
