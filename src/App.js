@@ -48,6 +48,7 @@ class App extends React.Component {
         this.onSearch = this.onSearch.bind(this);
         //Recommend methods
         this.handleRecommendKeywordChange = this.handleRecommendKeywordChange.bind(this);
+        this.handleRecommendNumberChange = this.handleRecommendNumberChange.bind(this);
         this.onRecommend = this.onRecommend.bind(this);
       }
       //Insert methods
@@ -151,6 +152,9 @@ class App extends React.Component {
       handleRecommendKeywordChange(e){
         this.setState({recommendkeyword: e.target.value})
       }
+      handleRecommendNumberChange(e){
+        this.setState({recommendnumber: e.target.value})
+      }
   // componentDidMount() {
   //   let currentcomponent = this;
   //   axios.get('http://localhost:3000')
@@ -251,7 +255,8 @@ onRecommend(e) {
   e.preventDefault();
   let currentcomponent = this;
   const entry = {
-    id: this.state.recommendkeyword
+    id: this.state.recommendkeyword,
+    number: this.state.recommendnumber
   }
   console.log(entry)
   fetch(`/query-example`, {
@@ -427,7 +432,10 @@ onRecommend(e) {
       <form onSubmit={this.onRecommend} method="user" className="right">
         <span>keywords for recommendation:</span>
         <input type="text" name="keywords" id="keywords" onChange={this.handleRecommendKeywordChange}/>
-        
+        <label>
+        <span>number of recommendations:</span>
+        <input type="text" name="number of recommendations" onChange={this.handleRecommendNumberChange} />
+        </label>
         <input type="submit" value="recommend" />
       </form>
     {/* ===================== */}

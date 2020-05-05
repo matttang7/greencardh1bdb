@@ -86,7 +86,7 @@ def find_relevant_jobs(kwords, desc_csv, topk=5):
 def query_example():
     req = request.get_json()
     print(req)
-    ids, desc = find_relevant_jobs(req['id'],'greencard.csv', 5)
+    ids, desc = find_relevant_jobs(req['id'],'greencard.csv', int(req['number']))
     strret = ""
     space = " "
     for i in ids:
