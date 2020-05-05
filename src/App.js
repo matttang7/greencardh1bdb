@@ -50,6 +50,12 @@ class App extends React.Component {
         this.handleRecommendKeywordChange = this.handleRecommendKeywordChange.bind(this);
         this.handleRecommendNumberChange = this.handleRecommendNumberChange.bind(this);
         this.onRecommend = this.onRecommend.bind(this);
+
+        //Advanced query methods
+        this.handleQueryOne = this.handleQueryOne.bind(this);
+        this.handleQueryTwo = this.handleQueryTwo.bind(this);
+        this.handleQueryTitleChange = this.handleQueryTitleChange.bind(this);
+        this.onQuery = this.onQuery.bind(this);
       }
       //Insert methods
       handleIdChange(e) {
@@ -155,6 +161,10 @@ class App extends React.Component {
       handleRecommendNumberChange(e){
         this.setState({recommendnumber: e.target.value})
       }
+
+      handleQueryTitleChange(e){
+        this.setState({querytitle: e.target.value})
+      }
   // componentDidMount() {
   //   let currentcomponent = this;
   //   axios.get('http://localhost:3000')
@@ -246,6 +256,7 @@ onSearch(e) {
     }
   })
   .then(function(res){
+      currentcomponent.setState({allentries: []})
       currentcomponent.setState({allentries: res.data}, function() {
       });
     })       
@@ -293,6 +304,39 @@ onRecommend(e) {
     });       
 } 
 
+handleQueryOne(e) {
+  e.preventDefault();
+  let currentcomponent = this;
+  axios.get('http://localhost:3000/queryone')
+  .then(function(res){
+      currentcomponent.setState({allentries: res.data}, function() {
+      });
+    })       
+} 
+
+handleQueryTwo(e) {
+  e.preventDefault();
+  let currentcomponent = this;
+  axios.get('http://localhost:3000/querytwo')
+  .then(function(res){
+      currentcomponent.setState({allentries: res.data}, function() {
+      });
+    })       
+} 
+
+onQuery(e) {
+  e.preventDefault();
+  let currentcomponent = this;
+  axios.get('http://localhost:3000/querythree', {
+    params: {
+      title: this.state.querytitle
+    }
+  })
+  .then(function(res){
+      currentcomponent.setState({allentries: res.data}, function() {
+      });
+    })     
+} 
   render() {
     return (
     <div className="App">
@@ -437,6 +481,20 @@ onRecommend(e) {
         <input type="text" name="number of recommendations" onChange={this.handleRecommendNumberChange} />
         </label>
         <input type="submit" value="recommend" />
+      </form>
+
+      <div>
+      <input type="button" value="Wage averages by employer" onClick={this.handleQueryOne}>
+        </input>
+      </div>
+      <div>
+      <input type="button" value="Wage averages by job title" onClick={this.handleQueryTwo}>
+        </input>
+      </div>
+      <form onSubmit={this.onQuery} method="user" className="right">
+        <span>Job title:</span>
+        <input type="text" name="keywords" id="keywords" onChange={this.handleQueryTitleChange}/>
+        <input type="submit" value="Find number of positions in each state" />
       </form>
     {/* ===================== */}
     {/* HOW TO USE IT         */}

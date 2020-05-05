@@ -143,4 +143,55 @@ app.delete('/delete',(req, res) => {
             console.log('Error while performing Query.');
         }
     });
-});
+  });
+
+  app.get('/queryone', (req, res) => {
+    //console.log("reached");
+    let sql  = 'select application_employer.EMPLOYER_NAME,avg(PREVAILING_WAGE) from application_employer left join employer on application_employer.EMPLOYER_NAME=employer.EMPLOYER_NAME natural join application group by application_employer.EMPLOYER_NAME';
+    connection.query(sql, function(err, rows, fields) {
+        if (!err) {
+            //console.log("SENT")
+            console.log(this.sql);
+            console.log(rows);
+            res.send(rows);
+        } else {
+            console.log(err);
+            console.log('Error while performing Query.');
+        }
+    })
+  });
+
+  app.get('/querytwo', (req, res) => {
+    //console.log("reached");
+    let sql  = 'select JOB_TITLE, avg(PREVAILING_WAGE) from applicant natural join application group by JOB_TITLE';
+    connection.query(sql, function(err, rows, fields) {
+        if (!err) {
+            //console.log("SENT")
+            console.log(this.sql);
+            console.log(rows);
+            res.send(rows);
+        } else {
+            console.log(err);
+            console.log('Error while performing Query.');
+        }
+    })
+  });
+
+  app.get('/querythree', (req, res) => {
+    //console.log("reached");
+    let title = req.query.title;
+    console.log(req.query.title);
+    console.log("reached");
+    let sql  = 'select STATEWORKSITE, count(*) from applicant natural join application where applicant.JOB_TITLE ="' + title + '" group by STATEWORKSITE';
+    connection.query(sql, function(err, rows, fields) {
+        if (!err) {
+            //console.log("SENT")
+            console.log(this.sql);
+            console.log(rows);
+            res.send(rows);
+        } else {
+            console.log(err);
+            console.log('Error while performing Query.');
+        }
+    })
+  });
