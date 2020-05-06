@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { JsonToTable } from "react-json-to-table";
+import './App.css';
 class App extends React.Component {
  constructor(props) {
   super(props)
@@ -192,9 +193,9 @@ class App extends React.Component {
     .then(res => {
         // const persons = res.data;
         // this.setState({ persons });
-        this.setState({
-          allentries: this.state.allentries.concat(res.data)
-        })
+        // this.setState({
+        //   allentries: this.state.allentries.concat(res.data)
+        // })
       })         
 } 
 
@@ -294,6 +295,7 @@ onRecommend(e) {
           }
         })
         .then(function(res){
+            currentcomponent.setState({allentries: []})
             currentcomponent.setState({allentries: res.data}, function() {
             });
         })   
@@ -309,6 +311,7 @@ handleQueryOne(e) {
   let currentcomponent = this;
   axios.get('http://localhost:3000/queryone')
   .then(function(res){
+      currentcomponent.setState({allentries: []})
       currentcomponent.setState({allentries: res.data}, function() {
       });
     })       
@@ -319,6 +322,7 @@ handleQueryTwo(e) {
   let currentcomponent = this;
   axios.get('http://localhost:3000/querytwo')
   .then(function(res){
+      currentcomponent.setState({allentries: []})
       currentcomponent.setState({allentries: res.data}, function() {
       });
     })       
@@ -333,6 +337,7 @@ onQuery(e) {
     }
   })
   .then(function(res){
+      currentcomponent.setState({allentries: []})
       currentcomponent.setState({allentries: res.data}, function() {
       });
     })     
@@ -363,6 +368,7 @@ onQuery(e) {
         <span>contract type:</span>
         <input type="text" name="contract type" onChange={this.handleContractTypeChange} />
         </label>
+        <br></br>
         <label>
         <span>contract time:</span>
         <input type="text" name="contract time" onChange={this.handleContractTimeChange} />
@@ -379,14 +385,14 @@ onQuery(e) {
         <span>source name:</span>
         <input type="text" name="source name" onChange={this.handleSourceNameChange} />
         </label>
-        <input type="submit" value="insert" />
+        <input type="submit" value="Insert" />
       </form>
 
       <form onSubmit={this.onDelete} method="user" className="right">
         <span>id to delete:</span>
         <input type="text" name="id" id="id" onChange={this.handleDeleteIdChange}/>
         
-        <input type="submit" value="delete" />
+        <input type="submit" value="Delete" />
       </form>
 
       <form onSubmit={this.onUpdate} method="user" className="right">
@@ -412,6 +418,7 @@ onQuery(e) {
         <span>contract type:</span>
         <input type="text" name="contract type" onChange={this.handleContractTypeUpdateChange} />
         </label>
+        <br></br>
         <label>
         <span>contract time:</span>
         <input type="text" name="contract time" onChange={this.handleContractTimeUpdateChange} />
@@ -428,7 +435,7 @@ onQuery(e) {
         <span>source name:</span>
         <input type="text" name="source name" onChange={this.handleSourceNameUpdateChange} />
         </label>
-        <input type="submit" value="update" />
+        <input type="submit" value="Update" />
       </form>
 
       <form onSubmit={this.onSearch} method="user" className="right">
@@ -454,6 +461,7 @@ onQuery(e) {
         <span>contract type:</span>
         <input type="text" name="contract type" onChange={this.handleContractTypeSearchChange} />
         </label>
+        <br></br>
         <label>
         <span>contract time:</span>
         <input type="text" name="contract time" onChange={this.handleContractTimeSearchChange} />
@@ -470,7 +478,7 @@ onQuery(e) {
         <span>source name:</span>
         <input type="text" name="source name" onChange={this.handleSourceNameSearchChange} />
         </label>
-        <input type="submit" value="search" />
+        <input type="submit" value="Search" />
       </form>
       
       <form onSubmit={this.onRecommend} method="user" className="right">
@@ -480,7 +488,7 @@ onQuery(e) {
         <span>number of recommendations:</span>
         <input type="text" name="number of recommendations" onChange={this.handleRecommendNumberChange} />
         </label>
-        <input type="submit" value="recommend" />
+        <input type="submit" value="Recommend" />
       </form>
 
       <div>

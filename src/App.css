@@ -1,3 +1,4 @@
+@import '~antd/dist/antd.css';
 .App {
   text-align: center;
 }
@@ -28,6 +29,23 @@
   color: #61dafb;
 }
 
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.right{
+  margin-bottom: 16px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
