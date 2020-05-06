@@ -484,7 +484,7 @@ onQuery(e) {
       </form>
 
       <div>
-      <input type="button" value="Wage averages by employer" onClick={this.handleQueryOne}>
+      <input type="button" value="Wage averages by state" onClick={this.handleQueryOne}>
         </input>
       </div>
       <div>

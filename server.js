@@ -147,7 +147,7 @@ app.delete('/delete',(req, res) => {
 
   app.get('/queryone', (req, res) => {
     //console.log("reached");
-    let sql  = 'select application_employer.EMPLOYER_NAME,avg(PREVAILING_WAGE) from application_employer left join employer on application_employer.EMPLOYER_NAME=employer.EMPLOYER_NAME natural join application group by application_employer.EMPLOYER_NAME';
+    let sql  = 'select STATEWORKSITE,max(PREVAILING_WAGE) from applicant natural join application group by STATEWORKSITE;';
     connection.query(sql, function(err, rows, fields) {
         if (!err) {
             //console.log("SENT")
